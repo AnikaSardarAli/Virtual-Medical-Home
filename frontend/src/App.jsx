@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ToastContainer } from 'react-toastify';
-import { Toaster } from 'react-hot-toast';
 import 'react-toastify/dist/ReactToastify.css';
 
 // Auth Components
@@ -21,7 +20,6 @@ import BookAppointment from './components/patient/BookAppointment';
 import PatientAppointments from './components/patient/Appointments';
 import MedicalRecords from './components/patient/MedicalRecords';
 import PatientProfile from './components/patient/Profile';
-import Prescriptions from './components/patient/Prescriptions';
 
 // Doctor Components
 import DoctorDashboard from './components/doctor/Dashboard';
@@ -66,30 +64,6 @@ function App() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      />
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          duration: 3000,
-          style: {
-            background: '#363636',
-            color: '#fff',
-          },
-          success: {
-            duration: 3000,
-            iconTheme: {
-              primary: '#4caf50',
-              secondary: '#fff',
-            },
-          },
-          error: {
-            duration: 4000,
-            iconTheme: {
-              primary: '#f44336',
-              secondary: '#fff',
-            },
-          },
-        }}
       />
       <div className="app">
         {isAuthenticated && <Header />}
@@ -142,14 +116,6 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={['patient']}>
                 <MedicalRecords />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/patient/prescriptions"
-            element={
-              <ProtectedRoute allowedRoles={['patient']}>
-                <Prescriptions />
               </ProtectedRoute>
             }
           />

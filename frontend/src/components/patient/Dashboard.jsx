@@ -143,233 +143,109 @@ const PatientDashboard = () => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Box 
-        sx={{ 
-          mb: 5,
-          p: { xs: 3, md: 4 },
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          borderRadius: 3,
-          color: 'white',
-          boxShadow: '0 8px 32px rgba(102, 126, 234, 0.3)',
-        }}
-      >
-        <Typography 
-          variant="h3" 
-          gutterBottom 
-          fontWeight="bold"
-          sx={{
-            fontSize: { xs: '2rem', md: '3rem' },
-          }}
-        >
+      <Box sx={{ mb: 4 }}>
+        <Typography variant="h4" gutterBottom fontWeight="bold">
           Welcome back, {user?.firstName}! 👋
         </Typography>
-        <Typography variant="h6" sx={{ opacity: 0.9 }}>
+        <Typography variant="body1" color="text.secondary">
           Here's your health overview for today
         </Typography>
       </Box>
 
       {/* Stats Cards */}
-      <Grid container spacing={3} sx={{ mb: 5 }}>
+      <Grid container spacing={3} sx={{ mb: 4 }}>
         <Grid item xs={12} sm={6} md={3}>
           <Paper
-            elevation={0}
             sx={{
-              p: 3,
-              height: 160,
+              p: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              height: 140,
               background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
               color: 'white',
-              borderRadius: 3,
-              transition: 'all 0.3s ease',
-              cursor: 'pointer',
-              '&:hover': {
-                transform: 'translateY(-8px)',
-                boxShadow: '0 12px 40px rgba(102, 126, 234, 0.4)',
-              },
             }}
           >
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-              <Box>
-                <Typography variant="body2" sx={{ opacity: 0.9, mb: 1 }}>
-                  Upcoming
-                </Typography>
-                <Typography variant="h2" fontWeight="bold" sx={{ mb: 0.5 }}>
-                  {stats.upcomingAppointments}
-                </Typography>
-                <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                  Appointments
-                </Typography>
-              </Box>
-              <CalendarMonth sx={{ fontSize: 48, opacity: 0.3 }} />
-            </Box>
+            <Typography variant="h6">Upcoming</Typography>
+            <Typography variant="h3">{stats.upcomingAppointments}</Typography>
+            <Typography variant="body2">Appointments</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
           <Paper
-            elevation={0}
             sx={{
-              p: 3,
-              height: 160,
+              p: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              height: 140,
               background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
               color: 'white',
-              borderRadius: 3,
-              transition: 'all 0.3s ease',
-              cursor: 'pointer',
-              '&:hover': {
-                transform: 'translateY(-8px)',
-                boxShadow: '0 12px 40px rgba(240, 147, 251, 0.4)',
-              },
             }}
           >
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-              <Box>
-                <Typography variant="body2" sx={{ opacity: 0.9, mb: 1 }}>
-                  Total
-                </Typography>
-                <Typography variant="h2" fontWeight="bold" sx={{ mb: 0.5 }}>
-                  {stats.totalAppointments}
-                </Typography>
-                <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                  Consultations
-                </Typography>
-              </Box>
-              <LocalHospital sx={{ fontSize: 48, opacity: 0.3 }} />
-            </Box>
+            <Typography variant="h6">Total</Typography>
+            <Typography variant="h3">{stats.totalAppointments}</Typography>
+            <Typography variant="body2">Consultations</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
           <Paper
-            elevation={0}
-            onClick={() => navigate('/patient/prescriptions')}
             sx={{
-              p: 3,
-              height: 160,
+              p: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              height: 140,
               background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
               color: 'white',
-              borderRadius: 3,
-              transition: 'all 0.3s ease',
-              cursor: 'pointer',
-              '&:hover': {
-                transform: 'translateY(-8px)',
-                boxShadow: '0 12px 40px rgba(79, 172, 254, 0.4)',
-              },
             }}
           >
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-              <Box>
-                <Typography variant="body2" sx={{ opacity: 0.9, mb: 1 }}>
-                  Prescriptions
-                </Typography>
-                <Typography variant="h2" fontWeight="bold" sx={{ mb: 0.5 }}>
-                  {stats.prescriptions}
-                </Typography>
-                <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                  Available
-                </Typography>
-              </Box>
-              <Description sx={{ fontSize: 48, opacity: 0.3 }} />
-            </Box>
+            <Typography variant="h6">Prescriptions</Typography>
+            <Typography variant="h3">{stats.prescriptions}</Typography>
+            <Typography variant="body2">Available</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
           <Paper
-            elevation={0}
             sx={{
-              p: 3,
-              height: 160,
+              p: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              height: 140,
               background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
               color: 'white',
-              borderRadius: 3,
-              transition: 'all 0.3s ease',
-              cursor: 'pointer',
-              '&:hover': {
-                transform: 'translateY(-8px)',
-                boxShadow: '0 12px 40px rgba(67, 233, 123, 0.4)',
-              },
             }}
           >
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-              <Box>
-                <Typography variant="body2" sx={{ opacity: 0.9, mb: 1 }}>
-                  Medical Records
-                </Typography>
-                <Typography variant="h2" fontWeight="bold" sx={{ mb: 0.5 }}>
-                  {stats.medicalRecords}
-                </Typography>
-                <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                  Documents
-                </Typography>
-              </Box>
-              <Description sx={{ fontSize: 48, opacity: 0.3 }} />
-            </Box>
+            <Typography variant="h6">Medical Records</Typography>
+            <Typography variant="h3">{stats.medicalRecords}</Typography>
+            <Typography variant="body2">Documents</Typography>
           </Paper>
         </Grid>
       </Grid>
 
       {/* Quick Actions */}
-      <Typography 
-        variant="h4" 
-        gutterBottom 
-        sx={{ mt: 6, mb: 3, fontWeight: 700 }}
-      >
+      <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
         Quick Actions
       </Typography>
-      <Grid container spacing={3} sx={{ mb: 6 }}>
+      <Grid container spacing={3}>
         {quickActions.map((action, index) => (
           <Grid item xs={12} sm={6} md={3} key={index}>
-            <Card 
-              elevation={0}
-              sx={{ 
-                height: '100%', 
-                borderRadius: 3,
-                border: '2px solid',
-                borderColor: 'grey.200',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer',
-                '&:hover': {
-                  transform: 'translateY(-8px)',
-                  borderColor: 'primary.main',
-                  boxShadow: '0 12px 40px rgba(0,0,0,0.1)',
-                },
-              }}
-              onClick={action.action}
-            >
-              <CardContent sx={{ textAlign: 'center', py: 4 }}>
-                <Box 
-                  sx={{ 
-                    mb: 2,
-                    transition: 'transform 0.3s ease',
-                    '&:hover': {
-                      transform: 'scale(1.1) rotate(5deg)',
-                    },
-                  }}
-                >
-                  {action.icon}
-                </Box>
-                <Typography 
-                  gutterBottom 
-                  variant="h6" 
-                  component="div"
-                  fontWeight={700}
-                >
+            <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+              <CardContent sx={{ flexGrow: 1, textAlign: 'center' }}>
+                <Box sx={{ mb: 2 }}>{action.icon}</Box>
+                <Typography gutterBottom variant="h6" component="div">
                   {action.title}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   {action.description}
                 </Typography>
               </CardContent>
-              <CardActions sx={{ justifyContent: 'center', pb: 3 }}>
+              <CardActions>
                 <Button 
                   size="large" 
+                  fullWidth 
                   variant="contained"
                   onClick={action.action}
-                  sx={{ 
-                    px: 4,
-                    borderRadius: 2,
-                    textTransform: 'none',
-                    fontWeight: 600,
-                  }}
+                  sx={{ py: 1.5 }}
                 >
-                  Go Now →
+                  Go
                 </Button>
               </CardActions>
             </Card>
@@ -380,127 +256,55 @@ const PatientDashboard = () => {
       {/* Recent Appointments */}
       {recentAppointments.length > 0 && (
         <Box sx={{ mt: 6 }}>
-          <Typography 
-            variant="h4" 
-            gutterBottom 
-            fontWeight={700}
-            sx={{ mb: 3 }}
-          >
+          <Typography variant="h5" gutterBottom fontWeight="bold">
             Recent Appointments
           </Typography>
-          <Paper 
-            elevation={0}
-            sx={{ 
-              p: 3, 
-              borderRadius: 3,
-              border: '2px solid',
-              borderColor: 'grey.200',
-            }}
-          >
+          <Paper sx={{ p: 2 }}>
             <List>
               {recentAppointments.map((appointment, index) => (
                 <div key={appointment._id}>
                   <ListItem
                     alignItems="flex-start"
-                    sx={{
-                      py: 2,
-                      borderRadius: 2,
-                      transition: 'background 0.2s ease',
-                      '&:hover': {
-                        bgcolor: 'grey.50',
-                      },
-                    }}
                     secondaryAction={
                       <Chip
                         label={appointment.status}
                         color={getStatusColor(appointment.status)}
-                        size="medium"
+                        size="small"
                         icon={getStatusIcon(appointment.status)}
-                        sx={{ 
-                          fontWeight: 600,
-                          px: 1,
-                        }}
                       />
                     }
                   >
                     <ListItemAvatar>
-                      <Avatar 
-                        sx={{ 
-                          bgcolor: 'primary.main',
-                          width: 56,
-                          height: 56,
-                          fontSize: '1.5rem',
-                          fontWeight: 700,
-                        }}
-                      >
+                      <Avatar sx={{ bgcolor: 'primary.main' }}>
                         {appointment.doctorId?.userId?.firstName?.charAt(0)}
                       </Avatar>
                     </ListItemAvatar>
                     <ListItemText
                       primary={
-                        <Typography variant="h6" fontWeight={700}>
+                        <Typography variant="subtitle1" fontWeight="medium">
                           Dr. {appointment.doctorId?.userId?.firstName} {appointment.doctorId?.userId?.lastName}
                         </Typography>
                       }
                       secondary={
                         <>
-                          <Typography 
-                            component="span" 
-                            variant="body1" 
-                            color="primary"
-                            fontWeight={600}
-                            sx={{ display: 'block', mt: 0.5 }}
-                          >
+                          <Typography component="span" variant="body2" color="text.primary">
                             {appointment.doctorId?.specialization}
                           </Typography>
-                          <Typography 
-                            component="span" 
-                            variant="body2" 
-                            color="text.secondary"
-                            sx={{ display: 'block', mt: 0.5 }}
-                          >
-                            📅 {new Date(appointment.appointmentDate).toLocaleDateString('en-US', {
-                              weekday: 'long',
-                              year: 'numeric',
-                              month: 'long',
-                              day: 'numeric',
-                            })}
-                          </Typography>
-                          <Typography 
-                            component="span" 
-                            variant="body2" 
-                            color="text.secondary"
-                          >
-                            🕐 {appointment.timeSlot?.startTime}
-                          </Typography>
+                          {` — ${new Date(appointment.appointmentDate).toLocaleDateString()} at ${appointment.timeSlot?.startTime}`}
                         </>
                       }
                     />
                   </ListItem>
-                  {index < recentAppointments.length - 1 && (
-                    <Divider variant="inset" component="li" sx={{ ml: 9 }} />
-                  )}
+                  {index < recentAppointments.length - 1 && <Divider variant="inset" component="li" />}
                 </div>
               ))}
             </List>
-            <Box sx={{ mt: 3, textAlign: 'center' }}>
+            <Box sx={{ mt: 2, textAlign: 'center' }}>
               <Button 
                 variant="outlined" 
-                size="large"
                 onClick={() => navigate('/patient/appointments')}
-                sx={{
-                  px: 4,
-                  py: 1.5,
-                  borderRadius: 2,
-                  borderWidth: 2,
-                  textTransform: 'none',
-                  fontWeight: 600,
-                  '&:hover': {
-                    borderWidth: 2,
-                  },
-                }}
               >
-                View All Appointments →
+                View All Appointments
               </Button>
             </Box>
           </Paper>

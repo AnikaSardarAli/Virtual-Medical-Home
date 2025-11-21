@@ -84,14 +84,14 @@ const DoctorProfile = () => {
       setLoading(true);
       
       // Update user info
-      await api.put('/users/profile', {
+      await api.put(`/users/${user._id}`, {
         firstName: profileData.firstName,
         lastName: profileData.lastName,
         phoneNumber: profileData.phoneNumber,
       });
 
       // Update doctor info
-      await api.put(`/doctors/${doctorData._id}/profile`, {
+      await api.put(`/doctors/${doctorData._id}`, {
         specialization: profileData.specialization,
         qualifications: profileData.qualifications.split(',').map((q) => q.trim()),
         experience: parseInt(profileData.experience),

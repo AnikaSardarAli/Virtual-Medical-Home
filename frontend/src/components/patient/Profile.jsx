@@ -70,7 +70,7 @@ const Profile = () => {
   const handleSave = async () => {
     try {
       setLoading(true);
-      const response = await api.put('/users/profile', profileData);
+      const response = await api.put(`/users/${user._id}`, profileData);
       
       if (response.data.success) {
         toast.success('Profile updated successfully');

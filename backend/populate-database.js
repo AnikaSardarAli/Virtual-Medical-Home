@@ -59,8 +59,6 @@ const appointmentSchema = new mongoose.Schema({
   status: String,
   symptoms: String,
   consultationNotes: String,
-  amount: Number,
-  paymentStatus: { type: String, default: 'pending' },
 }, { timestamps: true });
 
 const prescriptionSchema = new mongoose.Schema({
@@ -113,30 +111,6 @@ const populateDatabase = async () => {
     
     // Hash password
     const hashedPassword = await bcrypt.hash('test123', 10);
-
-    // Ensure admin exists with correct password
-    const adminExists = await User.findOne({ email: 'admin@vmh.com' });
-    if (adminExists) {
-      // Update admin password to ensure it's correct
-      await User.updateOne(
-        { email: 'admin@vmh.com' },
-        { $set: { password: hashedPassword } }
-      );
-      console.log('✅ Admin password updated');
-    } else {
-      // Create admin if doesn't exist
-      await User.create({
-        firstName: 'Admin',
-        lastName: 'User',
-        email: 'admin@vmh.com',
-        password: hashedPassword,
-        role: 'admin',
-        phone: '+1234567890',
-        isEmailVerified: true,
-        isActive: true,
-      });
-      console.log('✅ Admin account created');
-    }
 
     // Create patients
     const patients = await User.insertMany([
@@ -902,8 +876,6 @@ const populateDatabase = async () => {
         type: 'video',
         status: 'confirmed',
         symptoms: 'Chest pain and shortness of breath during exercise',
-        amount: 150,
-        paymentStatus: 'completed',
       },
       {
         patientId: patients[0]._id,
@@ -913,8 +885,6 @@ const populateDatabase = async () => {
         type: 'video',
         status: 'pending',
         symptoms: 'Persistent acne and skin redness',
-        amount: 120,
-        paymentStatus: 'pending',
       },
       // Patient 2 (Emma) - Upcoming appointment
       {
@@ -925,8 +895,6 @@ const populateDatabase = async () => {
         type: 'video',
         status: 'confirmed',
         symptoms: 'High blood pressure and palpitations',
-        amount: 150,
-        paymentStatus: 'completed',
       },
       // Patient 1 (John) - Past appointments
       {
@@ -938,8 +906,6 @@ const populateDatabase = async () => {
         status: 'completed',
         symptoms: 'Anxiety and sleep issues',
         consultationNotes: 'Patient showing signs of moderate anxiety. Recommended relaxation techniques and follow-up in 2 weeks.',
-        amount: 130,
-        paymentStatus: 'completed',
       },
       {
         patientId: patients[0]._id,
@@ -950,8 +916,6 @@ const populateDatabase = async () => {
         status: 'completed',
         symptoms: 'Regular checkup',
         consultationNotes: 'General health checkup completed. All vitals normal.',
-        amount: 100,
-        paymentStatus: 'completed',
       },
       // Patient 4 (Sophia) - New appointments
       {
@@ -962,8 +926,6 @@ const populateDatabase = async () => {
         type: 'video',
         status: 'confirmed',
         symptoms: 'Frequent headaches and dizziness',
-        amount: 170,
-        paymentStatus: 'completed',
       },
       {
         patientId: patients[3]._id,
@@ -974,8 +936,6 @@ const populateDatabase = async () => {
         status: 'completed',
         symptoms: 'Blurry vision and eye strain',
         consultationNotes: 'Prescribed reading glasses. Vision test completed successfully.',
-        amount: 160,
-        paymentStatus: 'completed',
       },
       // Patient 5 (Oliver) - New appointments
       {
@@ -986,8 +946,6 @@ const populateDatabase = async () => {
         type: 'video',
         status: 'pending',
         symptoms: 'Abdominal pain and digestive issues',
-        amount: 140,
-        paymentStatus: 'pending',
       },
       {
         patientId: patients[4]._id,
@@ -998,8 +956,6 @@ const populateDatabase = async () => {
         status: 'completed',
         symptoms: 'Annual health checkup',
         consultationNotes: 'Overall health good. Recommended maintaining current lifestyle.',
-        amount: 90,
-        paymentStatus: 'completed',
       },
       // Patient 6 (Ava) - New appointments
       {
@@ -1010,8 +966,6 @@ const populateDatabase = async () => {
         type: 'video',
         status: 'confirmed',
         symptoms: 'Persistent sore throat and ear pain',
-        amount: 110,
-        paymentStatus: 'completed',
       },
       {
         patientId: patients[5]._id,
@@ -1022,8 +976,6 @@ const populateDatabase = async () => {
         status: 'completed',
         symptoms: 'Thyroid screening and fatigue',
         consultationNotes: 'Thyroid levels normal. Recommended vitamin D supplements.',
-        amount: 145,
-        paymentStatus: 'completed',
       },
       // Patient 7 (William) - New appointments
       {
@@ -1034,8 +986,6 @@ const populateDatabase = async () => {
         type: 'video',
         status: 'pending',
         symptoms: 'Knee pain and mobility issues',
-        amount: 180,
-        paymentStatus: 'pending',
       },
       {
         patientId: patients[6]._id,
@@ -1046,8 +996,6 @@ const populateDatabase = async () => {
         status: 'completed',
         symptoms: 'Breathing difficulties and cough',
         consultationNotes: 'Prescribed inhaler for asthma management. Follow-up in 1 month.',
-        amount: 135,
-        paymentStatus: 'completed',
       },
       // Patient 8 (Isabella) - New appointments
       {
@@ -1058,8 +1006,6 @@ const populateDatabase = async () => {
         type: 'video',
         status: 'confirmed',
         symptoms: 'Joint pain and stiffness',
-        amount: 155,
-        paymentStatus: 'completed',
       },
       {
         patientId: patients[7]._id,
@@ -1070,8 +1016,6 @@ const populateDatabase = async () => {
         status: 'completed',
         symptoms: 'General health consultation',
         consultationNotes: 'All vitals normal. Health maintenance advised.',
-        amount: 100,
-        paymentStatus: 'completed',
       },
     ]);
 
@@ -1131,156 +1075,85 @@ const populateDatabase = async () => {
     console.log('📄 Creating medical records...');
     
     await MedicalRecord.insertMany([
-      // Patient 1 - John Patient (2 Records)
       {
         patientId: patients[0]._id,
         documentType: 'lab_report',
         fileName: 'blood-test-results.pdf',
         fileUrl: 'https://example.com/uploads/blood-test-results.pdf',
-        description: 'Complete blood count and lipid profile - Cholesterol slightly elevated (220 mg/dL)',
-        uploadedBy: doctors[2]._id, // Dr. Maria Garcia
+        description: 'Complete blood count and lipid profile',
+        uploadedBy: patients[0]._id,
       },
       {
         patientId: patients[0]._id,
-        documentType: 'imaging',
+        documentType: 'xray',
         fileName: 'chest-xray.jpg',
         fileUrl: 'https://example.com/uploads/chest-xray.jpg',
-        description: 'Chest X-ray - Clear lungs, No abnormalities detected',
-        uploadedBy: doctors[0]._id, // Dr. Sarah Johnson
+        description: 'Chest X-ray - Routine checkup',
+        uploadedBy: patients[0]._id,
       },
-      
-      // Patient 2 - Emma Wilson (1 Record)
+      {
+        patientId: patients[0]._id,
+        documentType: 'prescription',
+        fileName: 'prescription-dermatology.pdf',
+        fileUrl: 'https://example.com/uploads/prescription-dermatology.pdf',
+        description: 'Dermatology prescription for skin condition',
+        uploadedBy: doctors[1]._id,
+      },
+      {
+        patientId: patients[0]._id,
+        documentType: 'lab_report',
+        fileName: 'thyroid-test.pdf',
+        fileUrl: 'https://example.com/uploads/thyroid-test.pdf',
+        description: 'Thyroid function test results',
+        uploadedBy: patients[0]._id,
+      },
       {
         patientId: patients[1]._id,
         documentType: 'lab_report',
         fileName: 'ecg-report.pdf',
         fileUrl: 'https://example.com/uploads/ecg-report.pdf',
-        description: 'ECG Test Results - Normal sinus rhythm, No arrhythmia detected',
-        uploadedBy: doctors[0]._id, // Dr. Sarah Johnson
-      },
-      
-      // Patient 4 - Sophia Davis (2 Records)
-      {
-        patientId: patients[3]._id,
-        documentType: 'imaging',
-        fileName: 'brain-mri-scan.pdf',
-        fileUrl: 'https://example.com/uploads/brain-mri-scan.pdf',
-        description: 'MRI Brain scan - No structural abnormalities, Normal brain tissue',
-        uploadedBy: doctors[5]._id, // Dr. Robert Williams
+        description: 'ECG Test Results',
+        uploadedBy: patients[1]._id,
       },
       {
-        patientId: patients[3]._id,
+        patientId: patients[1]._id,
+        documentType: 'scan',
+        fileName: 'mri-scan.pdf',
+        fileUrl: 'https://example.com/uploads/mri-scan.pdf',
+        description: 'MRI Brain Scan - Normal findings',
+        uploadedBy: doctors[0]._id,
+      },
+      {
+        patientId: patients[1]._id,
+        documentType: 'other',
+        fileName: 'hospital-discharge.pdf',
+        fileUrl: 'https://example.com/uploads/hospital-discharge.pdf',
+        description: 'Hospital discharge summary - Minor surgery',
+        uploadedBy: doctors[3]._id,
+      },
+      {
+        patientId: patients[2]._id,
         documentType: 'lab_report',
-        fileName: 'cbc-report.pdf',
-        fileUrl: 'https://example.com/uploads/cbc-report.pdf',
-        description: 'Complete Blood Count - All parameters within normal range',
-        uploadedBy: doctors[8]._id, // Dr. Jennifer Lee
-      },
-      
-      // Patient 5 - Oliver Martinez (2 Records)
-      {
-        patientId: patients[4]._id,
-        documentType: 'imaging',
-        fileName: 'abdominal-ultrasound.pdf',
-        fileUrl: 'https://example.com/uploads/abdominal-ultrasound.pdf',
-        description: 'Abdominal Ultrasound - Mild gastritis detected, Liver and kidneys normal',
-        uploadedBy: doctors[9]._id, // Dr. Christopher Taylor
+        fileName: 'diabetes-screening.pdf',
+        fileUrl: 'https://example.com/uploads/diabetes-screening.pdf',
+        description: 'Diabetes screening panel - HbA1c test',
+        uploadedBy: patients[2]._id,
       },
       {
-        patientId: patients[4]._id,
-        documentType: 'lab_report',
-        fileName: 'digestive-panel.pdf',
-        fileUrl: 'https://example.com/uploads/digestive-panel.pdf',
-        description: 'Digestive System Lab Panel - Liver enzymes normal, Amylase slightly elevated',
-        uploadedBy: doctors[6]._id, // Dr. Emily Jones
-      },
-      
-      // Patient 6 - Ava Taylor (2 Records)
-      {
-        patientId: patients[5]._id,
-        documentType: 'lab_report',
-        fileName: 'thyroid-test.pdf',
-        fileUrl: 'https://example.com/uploads/thyroid-test.pdf',
-        description: 'Thyroid Function Test - TSH: 2.5 mIU/L (Normal), T3 & T4 within range',
-        uploadedBy: doctors[10]._id, // Dr. Amanda White
+        patientId: patients[2]._id,
+        documentType: 'xray',
+        fileName: 'dental-xray.jpg',
+        fileUrl: 'https://example.com/uploads/dental-xray.jpg',
+        description: 'Dental X-ray for routine checkup',
+        uploadedBy: patients[2]._id,
       },
       {
-        patientId: patients[5]._id,
-        documentType: 'diagnostic_test',
-        fileName: 'audiometry-report.pdf',
-        fileUrl: 'https://example.com/uploads/audiometry-report.pdf',
-        description: 'Audiometry Hearing Test - Mild hearing loss in left ear at high frequencies',
-        uploadedBy: doctors[7]._id, // Dr. Daniel Rodriguez
-      },
-      
-      // Patient 7 - William Anderson (2 Records)
-      {
-        patientId: patients[6]._id,
-        documentType: 'imaging',
-        fileName: 'knee-xray.pdf',
-        fileUrl: 'https://example.com/uploads/knee-xray.pdf',
-        description: 'Knee X-Ray (Bilateral) - Mild osteoarthritis in right knee, Left knee normal',
-        uploadedBy: doctors[3]._id, // Dr. James Smith
-      },
-      {
-        patientId: patients[6]._id,
-        documentType: 'diagnostic_test',
-        fileName: 'pulmonary-function-test.pdf',
-        fileUrl: 'https://example.com/uploads/pulmonary-function-test.pdf',
-        description: 'Pulmonary Function Test - FEV1 80% predicted, Mild obstructive pattern consistent with asthma',
-        uploadedBy: doctors[11]._id, // Dr. Matthew Harris
-      },
-      
-      // Patient 8 - Isabella Thomas (2 Records)
-      {
-        patientId: patients[7]._id,
-        documentType: 'imaging',
-        fileName: 'joint-xray-series.pdf',
-        fileUrl: 'https://example.com/uploads/joint-xray-series.pdf',
-        description: 'Joint X-Ray Series - Early signs of joint inflammation in fingers',
-        uploadedBy: doctors[12]._id, // Dr. Jessica Martin
-      },
-      {
-        patientId: patients[7]._id,
-        documentType: 'lab_report',
-        fileName: 'rheumatoid-test.pdf',
-        fileUrl: 'https://example.com/uploads/rheumatoid-test.pdf',
-        description: 'Rheumatoid Factor & Anti-CCP Test - RF positive (45 IU/mL), Anti-CCP elevated, ESR: 28 mm/hr',
-        uploadedBy: doctors[12]._id, // Dr. Jessica Martin
-      },
-      
-      // Additional Historical Records
-      {
-        patientId: patients[3]._id,
-        documentType: 'diagnostic_test',
-        fileName: 'vision-test.pdf',
-        fileUrl: 'https://example.com/uploads/vision-test.pdf',
-        description: 'Vision Test Report - Myopia -2.5D both eyes, Recommended corrective lenses',
-        uploadedBy: doctors[8]._id, // Dr. Jennifer Lee
-      },
-      {
-        patientId: patients[4]._id,
-        documentType: 'lab_report',
-        fileName: 'lipid-profile.pdf',
-        fileUrl: 'https://example.com/uploads/lipid-profile.pdf',
-        description: 'Lipid Profile - Total cholesterol 198 mg/dL, LDL 120 mg/dL, HDL 55 mg/dL',
-        uploadedBy: doctors[9]._id, // Dr. Christopher Taylor
-      },
-      {
-        patientId: patients[5]._id,
-        documentType: 'lab_report',
-        fileName: 'vitamin-test.pdf',
-        fileUrl: 'https://example.com/uploads/vitamin-test.pdf',
-        description: 'Vitamin D & B12 Test - Vitamin D: 18 ng/mL (Low), B12: 450 pg/mL (Normal)',
-        uploadedBy: doctors[10]._id, // Dr. Amanda White
-      },
-      {
-        patientId: patients[6]._id,
-        documentType: 'diagnostic_test',
-        fileName: 'asthma-control.pdf',
-        fileUrl: 'https://example.com/uploads/asthma-control.pdf',
-        description: 'Asthma Control Test - Score 18/25, Moderate control, Recommended inhaler adjustment',
-        uploadedBy: doctors[11]._id, // Dr. Matthew Harris
+        patientId: patients[2]._id,
+        documentType: 'other',
+        fileName: 'vaccination-card.pdf',
+        fileUrl: 'https://example.com/uploads/vaccination-card.pdf',
+        description: 'COVID-19 and flu vaccination records',
+        uploadedBy: patients[2]._id,
       },
     ]);
 
@@ -1290,7 +1163,7 @@ const populateDatabase = async () => {
     console.log(`   - Doctors: ${doctors.length}`);
     console.log(`   - Appointments: ${appointments.length}`);
     console.log(`   - Prescriptions: 2`);
-    console.log(`   - Medical Records: 17`);
+    console.log(`   - Medical Records: 10`);
     
     console.log('\n🔑 Test Credentials:');
     console.log('   Admin:');

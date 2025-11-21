@@ -5,7 +5,6 @@ const {
   getDoctors,
   getDoctorById,
   getDoctorByUserId,
-  getDoctorProfile,
   updateAvailability,
   getDoctorAppointments,
   updateDoctorProfile,
@@ -16,7 +15,6 @@ const upload = require('../middleware/upload');
 
 router.post('/register', protect, authorize('doctor'), upload.array('documents', 5), registerDoctor);
 router.get('/', getDoctors);
-router.get('/profile', protect, authorize('doctor'), getDoctorProfile);
 router.get('/user/:userId', getDoctorByUserId);
 router.get('/:id', getDoctorById);
 router.put('/:id/availability', protect, authorize('doctor'), updateAvailability);

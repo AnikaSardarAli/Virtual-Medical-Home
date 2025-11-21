@@ -102,24 +102,6 @@ exports.getDoctorById = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Get logged-in doctor's profile
-// @route   GET /api/doctors/profile
-// @access  Private/Doctor
-exports.getDoctorProfile = asyncHandler(async (req, res) => {
-  const doctor = await Doctor.findOne({ userId: req.user.id })
-    .populate('userId', 'firstName lastName email phone profilePicture dateOfBirth gender address');
-
-  if (!doctor) {
-    res.status(404);
-    throw new Error('Doctor profile not found');
-  }
-
-  res.json({
-    success: true,
-    data: doctor,
-  });
-});
-
 // @desc    Get doctor by user ID
 // @route   GET /api/doctors/user/:userId
 // @access  Public

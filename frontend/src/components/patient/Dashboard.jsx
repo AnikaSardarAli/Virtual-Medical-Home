@@ -52,9 +52,9 @@ const PatientDashboard = () => {
     try {
       setLoading(true);
       const [appointmentsRes, prescriptionsRes, recordsRes] = await Promise.all([
-        axios.get(`/appointments/patient/${user._id}`),
-        axios.get(`/prescriptions/patient/${user._id}`),
-        axios.get(`/medical-records/patient/${user._id}`),
+        axios.get(`/api/appointments/patient/${user._id}`),
+        axios.get(`/api/prescriptions/patient/${user._id}`),
+        axios.get(`/api/medical-records/patient/${user._id}`),
       ]);
 
       const appointments = appointmentsRes.data.data || [];

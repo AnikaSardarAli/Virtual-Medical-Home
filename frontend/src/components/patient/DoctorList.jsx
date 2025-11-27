@@ -50,7 +50,7 @@ const DoctorList = () => {
   const fetchDoctors = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('/doctors?limit=50'); // Increased limit to show all doctors
+      const response = await axios.get('/api/doctors?limit=50'); // Increased limit to show all doctors
       const doctorList = response.data.data || [];
       
       // Filter only approved and active doctors

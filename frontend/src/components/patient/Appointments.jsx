@@ -49,7 +49,7 @@ const Appointments = () => {
   const fetchAppointments = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`/appointments/patient/${user._id}`);
+      const response = await axios.get(`/api/appointments/patient/${user._id}`);
       setAppointments(response.data.data || []);
     } catch (error) {
       console.error('Error fetching appointments:', error);
@@ -66,7 +66,7 @@ const Appointments = () => {
     }
 
     try {
-      await axios.delete(`/appointments/${selectedAppointment._id}`, {
+      await axios.delete(`/api/appointments/${selectedAppointment._id}`, {
         data: { reason: cancelReason },
       });
       toast.success('Appointment cancelled successfully');

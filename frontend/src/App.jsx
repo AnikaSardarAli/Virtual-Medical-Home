@@ -12,6 +12,7 @@ import Register from './components/auth/Register';
 // Common Components
 import ProtectedRoute from './components/common/ProtectedRoute';
 import Header from './components/common/Header';
+import LandingPage from './components/common/LandingPage';
 
 // Patient Components
 import PatientDashboard from './components/patient/Dashboard';
@@ -221,7 +222,7 @@ function App() {
               isAuthenticated ? (
                 <Navigate to={`/${user?.role}`} />
               ) : (
-                <Navigate to="/login" />
+                <LandingPage />
               )
             }
           />

@@ -50,11 +50,11 @@ const DoctorDashboard = () => {
       setLoading(true);
       
       // Fetch doctor profile to get doctor ID
-      const doctorResponse = await api.get(`/doctors/user/${user._id}`);
+      const doctorResponse = await api.get(`/api/doctors/user/${user._id}`);
       const doctorId = doctorResponse.data.data._id;
       
       // Fetch appointments
-      const appointmentsResponse = await api.get(`/appointments/doctor/${doctorId}`);
+      const appointmentsResponse = await api.get(`/api/appointments/doctor/${doctorId}`);
       const appointments = appointmentsResponse.data.data || [];
       
       // Calculate stats

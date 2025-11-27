@@ -47,7 +47,7 @@ const MedicalRecords = () => {
   const fetchMedicalRecords = async () => {
     try {
       setLoading(true);
-      const response = await api.get(`/medical-records/patient/${user._id}`);
+      const response = await api.get(`/api/medical-records/patient/${user._id}`);
       if (response.data.success) {
         setRecords(response.data.data);
       }
@@ -61,7 +61,7 @@ const MedicalRecords = () => {
 
   const handleAddRecord = async () => {
     try {
-      const response = await api.post('/medical-records/upload', {
+      const response = await api.post('/api/medical-records/upload', {
         patientId: user._id,
         ...newRecord,
         fileUrl: 'https://example.com/sample-document.pdf', // In real app, handle file upload

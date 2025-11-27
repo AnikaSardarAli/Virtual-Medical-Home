@@ -60,7 +60,7 @@ const DoctorAppointments = () => {
 
   const fetchDoctorProfile = async () => {
     try {
-      const response = await api.get(`/doctors/user/${user._id}`);
+      const response = await api.get(`/api/doctors/user/${user._id}`);
       setDoctorId(response.data.data._id);
     } catch (error) {
       console.error('Error fetching doctor profile:', error);
@@ -71,7 +71,7 @@ const DoctorAppointments = () => {
   const fetchAppointments = async () => {
     try {
       setLoading(true);
-      const response = await api.get(`/appointments/doctor/${doctorId}`);
+      const response = await api.get(`/api/appointments/doctor/${doctorId}`);
       if (response.data.success) {
         setAppointments(response.data.data);
       }
@@ -111,7 +111,7 @@ const DoctorAppointments = () => {
 
   const handleStatusChange = async (appointmentId, newStatus) => {
     try {
-      const response = await api.put(`/appointments/${appointmentId}`, {
+      const response = await api.put(`/api/appointments/${appointmentId}`, {
         status: newStatus,
       });
 

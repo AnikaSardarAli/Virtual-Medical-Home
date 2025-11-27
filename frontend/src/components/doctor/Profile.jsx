@@ -48,7 +48,7 @@ const DoctorProfile = () => {
   const fetchDoctorProfile = async () => {
     try {
       setLoading(true);
-      const response = await api.get(`/doctors/user/${user._id}`);
+      const response = await api.get(`/api/doctors/user/${user._id}`);
       const doctor = response.data.data;
       setDoctorData(doctor);
       
@@ -84,14 +84,14 @@ const DoctorProfile = () => {
       setLoading(true);
       
       // Update user info
-      await api.put(`/users/${user._id}`, {
+      await api.put(`/api/users/${user._id}`, {
         firstName: profileData.firstName,
         lastName: profileData.lastName,
         phoneNumber: profileData.phoneNumber,
       });
 
       // Update doctor info
-      await api.put(`/doctors/${doctorData._id}`, {
+      await api.put(`/api/doctors/${doctorData._id}`, {
         specialization: profileData.specialization,
         qualifications: profileData.qualifications.split(',').map((q) => q.trim()),
         experience: parseInt(profileData.experience),
